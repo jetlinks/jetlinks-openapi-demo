@@ -1,8 +1,7 @@
 package org.jetlinks.demo.openapi;
 
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
+
+
 
 import java.io.IOException;
 import java.util.Map;
@@ -17,20 +16,23 @@ public class Demo {
     private String clientId;
 
 
-    public Object get(String pathValue) {
-        CloseableHttpClient client = HttpClientBuilder.create()
-                .build();
+    public Response get(String url,String pathValue) throws IOException {
+        HttpRequest request = new SimpleHttpRequest(url);
 
-        return null;
+        return request.get();
     }
 
-    public Object delete(String pathValue) {
-        return null;
+    public Response delete(String url, String pathValue) throws IOException {
+        HttpRequest request = new SimpleHttpRequest(url);
+        return request.delete();
     }
 
-    public Object post(Map<String, Object> param) {
+    public Response post(String url, Map<String, String> param) throws IOException {
 
-        return null;
+        HttpRequest request = new SimpleHttpRequest(url);
+
+        request.params(param);
+        return request.post();
     }
 
 
