@@ -27,7 +27,7 @@ public interface HttpRequest extends Closeable {
 
     HttpRequest param(String name, String value);
 
-    HttpRequest params(Map<String, String> params);
+    HttpRequest params(Map<String, Object> params);
 
     HttpRequest header(String name, String value);
 

@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  */
 public class SimpleHttpRequest implements HttpRequest {
 
-    private Map<String, String> params = new LinkedHashMap<>();
+    private Map<String, Object> params = new LinkedHashMap<>();
     private Map<String, String> headers = new LinkedHashMap<>();
     private String url;
     private String requestBody;
@@ -90,7 +90,7 @@ public class SimpleHttpRequest implements HttpRequest {
     protected UrlEncodedFormEntity createUrlEncodedFormEntity() throws UnsupportedEncodingException {
         List<NameValuePair> nameValuePair = params.entrySet()
                 .stream().map(stringStringEntry ->
-                        new BasicNameValuePair(stringStringEntry.getKey(), stringStringEntry.getValue()))
+                        new BasicNameValuePair(stringStringEntry.getKey(), String.valueOf(stringStringEntry.getValue())))
                 .collect(Collectors.toList());
         return new UrlEncodedFormEntity(nameValuePair, encode);
     }
@@ -152,7 +152,7 @@ public class SimpleHttpRequest implements HttpRequest {
     }
 
     @Override
-    public HttpRequest params(Map<String, String> params) {
+    public HttpRequest params(Map<String, Object> params) {
         this.params.putAll(params);
         return this;
     }
