@@ -1,18 +1,12 @@
 package org.jetlinks.demo.openapi;
 
 import com.alibaba.fastjson.JSON;
-import org.apache.commons.codec.binary.Hex;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.jetlinks.demo.openapi.util.Utils;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
-import java.security.MessageDigest;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TreeMap;
-import java.util.stream.Collectors;
 
 /**
  * @author wangzheng
@@ -23,6 +17,7 @@ class RequestTest {
 
     private static final String base_url = "http://localhost:8844/api/v1/device";
     private static final String deviceId = "test001";
+
     /**
      * 获取设备属性测试
      */
@@ -30,11 +25,11 @@ class RequestTest {
     void getPropertyTest() {
 
         String property = "temperature";//温度属性，属性在设备管理的设备型号中设置
-        String url = base_url +"/" + deviceId + "/property/" + property;
+        String url = base_url + "/" + deviceId + "/property/" + property;
 
         HttpRequest request = new SimpleHttpRequest(url);
-        request.headers(createHeadersOfParams(new HashMap<>()));
-        System.out.println(createHeadersOfParams(new HashMap<>()));
+        request.headers(HeaderUtils.createHeadersOfParams(new HashMap<>()));
+        System.out.println(HeaderUtils.createHeadersOfParams(new HashMap<>()));
         try {
 
             Response response = request.get();
@@ -59,8 +54,8 @@ class RequestTest {
         Map<String, Object> params = new HashMap<>();
         params.put("temperature", 50F);
 
-        request.headers(createHeadersOfJsonString(JSON.toJSONString(params)));
-        System.out.println("Headers:===========>"+ createHeadersOfParams(params));
+        request.headers(HeaderUtils.createHeadersOfJsonString(JSON.toJSONString(params)));
+        System.out.println("Headers:===========>" + HeaderUtils.createHeadersOfParams(params));
         request.requestBody(JSON.toJSONString(params));
 
         try {
@@ -84,8 +79,8 @@ class RequestTest {
         HttpRequest request = new SimpleHttpRequest(url);
         String body = "{\"start_date\":\"2020-04-12\"}";
 
-        request.headers(createHeadersOfJsonString(body));
-        System.out.println("Headers:===========>"+ createHeadersOfJsonString(body));
+        request.headers(HeaderUtils.createHeadersOfJsonString(body));
+        System.out.println("Headers:===========>" + HeaderUtils.createHeadersOfJsonString(body));
         request.requestBody(body);
 
         try {
@@ -103,11 +98,11 @@ class RequestTest {
     @Test
     void getDeviceDetailTest() {
 
-        String url = base_url +"/" + deviceId + "/_detail";
+        String url = base_url + "/" + deviceId + "/_detail";
 
         HttpRequest request = new SimpleHttpRequest(url);
-        request.headers(createHeadersOfParams(new HashMap<>()));
-        System.out.println(createHeadersOfParams(new HashMap<>()));
+        request.headers(HeaderUtils.createHeadersOfParams(new HashMap<>()));
+        System.out.println(HeaderUtils.createHeadersOfParams(new HashMap<>()));
         try {
 
             Response response = request.get();
@@ -132,7 +127,7 @@ class RequestTest {
 
         //String body = "{\"pageSize\":25,\"pageIndex\":0,\"where\":\"productId is 1236859833832701952\"}";
         String body = "{\"pageSize\":25,\"pageIndex\":0,\"terms\":[{\"column\":\"productId\",\"value\":\"1236859833832701952\"}]}";
-        request.headers(createHeadersOfJsonString(body));
+        request.headers(HeaderUtils.createHeadersOfJsonString(body));
         request.requestBody(body);
 
         try {
@@ -156,7 +151,7 @@ class RequestTest {
 
         //String body = "{\"pageSize\":25,\"pageIndex\":0,\"where\":\"productId is 1236859833832701952\"}";
         String body = "{\"pageSize\":25,\"pageIndex\":0,\"terms\":[{\"column\":\"productId\",\"value\":\"1236859833832701952\"}]}";
-        request.headers(createHeadersOfJsonString(body));
+        request.headers(HeaderUtils.createHeadersOfJsonString(body));
         request.requestBody(body);
 
         try {
@@ -189,8 +184,8 @@ class RequestTest {
                 "              ]\n" +
                 "          }";
 
-        request.headers(createHeadersOfJsonString(body));
-        System.out.println("Headers:===========>"+ createHeadersOfJsonString(body));
+        request.headers(HeaderUtils.createHeadersOfJsonString(body));
+        System.out.println("Headers:===========>" + HeaderUtils.createHeadersOfJsonString(body));
         request.requestBody(body);
 
         try {
@@ -208,11 +203,11 @@ class RequestTest {
     @Test
     void queryDevicePropertiesTest() {
 
-        String url = base_url +"/" + deviceId + "/properties/_latest";
+        String url = base_url + "/" + deviceId + "/properties/_latest";
 
         HttpRequest request = new SimpleHttpRequest(url);
-        request.headers(createHeadersOfParams(new HashMap<>()));
-        System.out.println(createHeadersOfParams(new HashMap<>()));
+        request.headers(HeaderUtils.createHeadersOfParams(new HashMap<>()));
+        System.out.println(HeaderUtils.createHeadersOfParams(new HashMap<>()));
         try {
 
             Response response = request.get();
@@ -248,8 +243,8 @@ class RequestTest {
                 "              ]\n" +
                 "          }";
 
-        request.headers(createHeadersOfJsonString(body));
-        System.out.println("Headers:===========>"+ createHeadersOfJsonString(body));
+        request.headers(HeaderUtils.createHeadersOfJsonString(body));
+        System.out.println("Headers:===========>" + HeaderUtils.createHeadersOfJsonString(body));
         request.requestBody(body);
 
         try {
@@ -261,59 +256,5 @@ class RequestTest {
         }
     }
 
-    private Map<String, String> createHeadersOfParams(Map<String, Object> params) {
-        //时间戳
-        String xTimestamp = String.valueOf(new Date().getTime());
-        //openApi客户端id
-        String xClientId = "kFpJfaXB2AS5zHRZ";
-        //密钥
-        String secureKey = "xHZ2MyCG5TEdntyFhX72Gx6K";
-        //将参数按ASCII排序后拼接为k1=v1&k2=v2的格式
-        String paramString = new TreeMap<>(params).entrySet()
-                .stream()
-                .map(e -> e.getKey().concat("=").concat(String.valueOf(e.getValue())))
-                .collect(Collectors.joining("&"))
-                ;
 
-        System.out.println(paramString);
-
-        //param+X-Timestamp+SecureKey通过MD5加密
-        MessageDigest digest = DigestUtils.getMd5Digest();
-        System.out.println(paramString+xTimestamp+secureKey);
-        digest.update(paramString.getBytes());
-        digest.update(xTimestamp.getBytes());
-        digest.update(secureKey.getBytes());
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put("X-Sign", Hex.encodeHexString(digest.digest()));
-        headers.put("X-Client-Id", xClientId);
-        headers.put("X-Timestamp", xTimestamp);
-
-        return headers;
-    }
-
-
-    private Map<String, String> createHeadersOfJsonString(String jsonString) {
-        //时间戳
-        String xTimestamp = String.valueOf(new Date().getTime());
-        //openApi客户端id
-        String xClientId = "kFpJfaXB2AS5zHRZ";
-        //密钥
-        String secureKey = "xHZ2MyCG5TEdntyFhX72Gx6K";
-
-
-        //param+X-Timestamp+SecureKey通过MD5加密
-        MessageDigest digest = DigestUtils.getMd5Digest();
-        System.out.println(jsonString+xTimestamp+secureKey);
-        digest.update(jsonString.getBytes());
-        digest.update(xTimestamp.getBytes());
-        digest.update(secureKey.getBytes());
-
-        Map<String, String> headers = new HashMap<>();
-        headers.put("X-Sign", Hex.encodeHexString(digest.digest()));
-        headers.put("X-Client-Id", xClientId);
-        headers.put("X-Timestamp", xTimestamp);
-
-        return headers;
-    }
 }
