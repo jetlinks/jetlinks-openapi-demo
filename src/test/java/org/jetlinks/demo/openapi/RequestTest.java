@@ -114,6 +114,56 @@ class RequestTest {
         }
     }
 
+    /**
+     * 批量保存设备测试
+     */
+    @Test
+    void saveDeviceTest() {
+        String url = base_url;
+
+        HttpRequest request = new SimpleHttpRequest(url);
+
+        String body = "[{\n" +
+                "\t\t\"id\": \"test002\",\n" +
+                "\t\t\"name\": \"设备002\",\n" +
+                "\t\t\"productId\": \"1236859833832701952\",\n" +
+                "\t\t\"configuration\": {\n" +
+                "\t\t\t\"username\": \"test002\",\n" +
+                "\t\t\t\"password\": \"test002\"\n" +
+                "\t\t},\n" +
+                "\t\t\"tags\": [{\n" +
+                "\t\t\t\"deviceId\": \"test002\",\n" +
+                "\t\t\t\"key\": \"area\",\n" +
+                "\t\t\t\"name\": \"地区\",\n" +
+                "\t\t\t\"value\": \"chongqing\"\n" +
+                "\t\t}]\n" +
+                "\n" +
+                "\t},\n" +
+                "\t{\n" +
+                "\t\t\"id\": \"test003\",\n" +
+                "\t\t\"name\": \"设备名称\",\n" +
+                "\t\t\"productId\": \"1236859833832701952\",\n" +
+                "\t\t\"configuration\": {}\n" +
+                "\t},\n" +
+                "\t{\n" +
+                "\t\t\"id\": \"test004\",\n" +
+                "\t\t\"name\": \"设备名称\",\n" +
+                "\t\t\"productId\": \"1236859833832701952\",\n" +
+                "\t\t\"configuration\": {}\n" +
+                "\t}\n" +
+                "]";
+        request.headers(HeaderUtils.createHeadersOfJsonString(body));
+        request.requestBody(body);
+
+        try {
+            Response response = request.post();
+            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
+            System.out.println(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     /**
      * 根据设备ID类型和动态查询参数查询设备相关数据测试
