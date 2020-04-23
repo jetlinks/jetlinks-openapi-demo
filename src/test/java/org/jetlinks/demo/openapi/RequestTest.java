@@ -164,6 +164,52 @@ class RequestTest {
         }
     }
 
+    /**
+     * 批量激活/注销设备测试
+     */
+    @Test
+    void batchDeployTest() {
+        String url = base_url + "/_deploy";//激活
+        //String url = base_url + "/_unDeploy";//注销
+
+        HttpRequest request = new SimpleHttpRequest(url);
+
+        String body = "[\"test003\",\"test004\"]";
+        request.headers(HeaderUtils.createHeadersOfJsonString(body));
+        request.requestBody(body);
+
+        try {
+            Response response = request.post();
+            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
+            System.out.println(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * 批量删除设备测试（只会删除状态为未激活的设备）
+     */
+    @Test
+    void batchDeleteTest() {
+        String url = base_url + "/_delete";
+
+        HttpRequest request = new SimpleHttpRequest(url);
+
+        String body = "[\"test002\",\"test003\",\"test004\"]";
+        request.headers(HeaderUtils.createHeadersOfJsonString(body));
+        request.requestBody(body);
+
+        System.out.println("Headers:===========>" + HeaderUtils.createHeadersOfJsonString(body));
+
+        try {
+            Response response = request.post();
+            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
+            System.out.println(result);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * 根据设备ID类型和动态查询参数查询设备相关数据测试
