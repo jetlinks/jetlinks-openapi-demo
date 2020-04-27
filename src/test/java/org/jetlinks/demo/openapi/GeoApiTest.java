@@ -24,14 +24,43 @@ public class GeoApiTest {
 
         System.out.println(url);
         HttpRequest request = new SimpleHttpRequest(url);
-        String body = "{" +
-                "\"shape\": {" +
-                "\"objectId\": \"youyang\" " +
-                "}," +
-                "\"filter\": {" +
-                "" +
-                "}" +
+//        String body = "{" +
+//                "\"shape\": {" +
+//                "\"objectId\": \"youyang\" " +
+//                "}," +
+//                "\"filter\": {" +
+//                "" +
+//                "}" +
+//                "}";
+
+        //shape
+        String body = "{\n" +
+                "\t\"shape\": {\n" +
+                "\t\t\"type\": \"Polygon\",\n" +
+                "\t\t\"coordinates\": [\n" +
+                "\t\t\t[\n" +
+                "\t\t\t\t[108.3142, 28.9984],\n" +
+                "\t\t\t\t[108.3252, 29.0039],\n" +
+                "\t\t\t\t[108.3252, 28.96],\n" +
+                "\t\t\t\t[108.3142, 28.9984]\n" +
+                "\t\t\t]\n" +
+                "\t\t]\n" +
+                "\t},\n" +
+                "\t\"filter\": {\n" +
+                "\n" +
+                "\t}\n" +
                 "}";
+        //filter
+//        String body = "{\n" +
+//                "\t\"shape\": {\n" +
+//                "\t\t\"objectId\": \"youyang\"\n" +
+//                "\t},\n" +
+//                "\t\"filter\": {\n" +
+//                "\t\t\"name\": \"酉阳土家族苗族自治县\",\n" +
+//                "\t\t\"group\": \"china\"\n" +
+//                "\t}\n" +
+//                "\n" +
+//                "}";
 
         request.headers(HeaderUtils.createHeadersOfJsonString(body));
         System.out.println("Headers:===========>" + HeaderUtils.createHeadersOfJsonString(body));
