@@ -11,7 +11,7 @@ import java.util.Map;
  * @see
  * @since 1.0
  */
-public class TokenRequestToken {
+public class TokenRequest {
 
     /**
      * 申请token测试
