@@ -69,6 +69,7 @@ public class HeaderUtils {
         headers.put("X-Client-Id", xClientId);
         headers.put("X-Timestamp", xTimestamp);
 
+        System.out.println(Hex.encodeHexString(digest.digest()) +"|"+xClientId+"|"+ xTimestamp);
         return headers;
     }
 }

@@ -1,5 +1,6 @@
 package org.jetlinks.demo.openapi;
 
+import com.alibaba.fastjson.JSON;
 import org.jetlinks.demo.openapi.util.Utils;
 import org.junit.jupiter.api.Test;
 
@@ -34,33 +35,32 @@ public class GeoApiTest {
 //                "}";
 
         //shape
-        String body = "{\n" +
-                "\t\"shape\": {\n" +
-                "\t\t\"type\": \"Polygon\",\n" +
-                "\t\t\"coordinates\": [\n" +
-                "\t\t\t[\n" +
-                "\t\t\t\t[108.3142, 28.9984],\n" +
-                "\t\t\t\t[108.3252, 29.0039],\n" +
-                "\t\t\t\t[108.3252, 28.96],\n" +
-                "\t\t\t\t[108.3142, 28.9984]\n" +
-                "\t\t\t]\n" +
-                "\t\t]\n" +
-                "\t},\n" +
-                "\t\"filter\": {\n" +
-                "\n" +
-                "\t}\n" +
-                "}";
-        //filter
 //        String body = "{\n" +
 //                "\t\"shape\": {\n" +
-//                "\t\t\"objectId\": \"youyang\"\n" +
+//                "\t\t\"type\": \"Polygon\",\n" +
+//                "\t\t\"coordinates\": [\n" +
+//                "\t\t\t[\n" +
+//                "\t\t\t\t[108.3142, 28.9984],\n" +
+//                "\t\t\t\t[108.3252, 29.0039],\n" +
+//                "\t\t\t\t[108.3252, 28.96],\n" +
+//                "\t\t\t\t[108.3142, 28.9984]\n" +
+//                "\t\t\t]\n" +
+//                "\t\t]\n" +
 //                "\t},\n" +
 //                "\t\"filter\": {\n" +
-//                "\t\t\"name\": \"酉阳土家族苗族自治县\",\n" +
-//                "\t\t\"group\": \"china\"\n" +
-//                "\t}\n" +
 //                "\n" +
+//                "\t}\n" +
 //                "}";
+        //filter
+        String body = "{\n" +
+                "\t\"shape\": {\n" +
+                "\t\t\"objectId\": \"youyang\"\n" +
+                "\t},\n" +
+                "\t\"filter\": {\n" +
+                "\t  \t\"where\": \"tags.name=酉阳土家族苗族自治县 and tags.group=china\"\n" +
+                "\t}\n" +
+                "\n" +
+                "}";
 
         request.headers(HeaderUtils.createHeadersOfJsonString(body));
         System.out.println("Headers:===========>" + HeaderUtils.createHeadersOfJsonString(body));
@@ -68,8 +68,7 @@ public class GeoApiTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -84,13 +83,23 @@ public class GeoApiTest {
 
         System.out.println(url);
         HttpRequest request = new SimpleHttpRequest(url);
-        String body = "{" +
-                "\"shape\": {" +
-                "\"objectId\": \"youyang\" " +
-                "}," +
-                "\"filter\": {" +
-                "" +
-                "}" +
+//        String body = "{" +
+//                "\"shape\": {" +
+//                "\"objectId\": \"yuzhong\" " +
+//                "}," +
+//                "\"filter\": {" +
+//                "" +
+//                "}" +
+//                "}";
+        //filter
+        String body = "{\n" +
+                "\t\"shape\": {\n" +
+                "\t\t\"objectId\": \"youyang\"\n" +
+                "\t},\n" +
+                "\t\"filter\": {\n" +
+                "\t  \t\"where\": \"tags.name=酉阳土家族苗族自治县 and tags.group=china\"\n" +
+                "\t}\n" +
+                "\n" +
                 "}";
 
         request.headers(HeaderUtils.createHeadersOfJsonString(body));
@@ -99,8 +108,7 @@ public class GeoApiTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -115,7 +123,7 @@ public class GeoApiTest {
 
         System.out.println(url);
         HttpRequest request = new SimpleHttpRequest(url);
-        String body = "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"id\":\"youyang\",\"objectId\":\"youyang\",\"objectType\":\"city\",\"name\":\"酉阳土家族苗族自治县\",\"group\":\"china\"},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[108.3142,28.9984],[108.3252,29.0039],[108.3252,28.96],[108.3142,28.9984]]]}}]}";
+        String body = "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"name\":\"酉阳土家族苗族自治县\",\"id\":\"youyang2\",\"objectId\":\"youyang\",\"group\":\"china\",\"objectType\":\"city\"},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[108.3142,28.9984],[108.3253,29.0139],[108.3253,28.95],[108.3142,28.9984]]]}}]}";
 
         request.headers(HeaderUtils.createHeadersOfJsonString(body));
         System.out.println("Headers:===========>" + HeaderUtils.createHeadersOfJsonString(body));
@@ -123,15 +131,14 @@ public class GeoApiTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
 
-    private String getChongQingGeoJson() {
+    private static String getChongQingGeoJson() {
         HttpRequest request = new SimpleHttpRequest("https://a.amap.com/jsapi_demos/static/geojson/chongqing.json");
         String result = "";
         try {

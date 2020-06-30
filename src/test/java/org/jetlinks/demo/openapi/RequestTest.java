@@ -33,9 +33,8 @@ class RequestTest {
         try {
 
             Response response = request.get();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
 
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,8 +59,7 @@ class RequestTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -85,8 +83,7 @@ class RequestTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -106,9 +103,8 @@ class RequestTest {
         try {
 
             Response response = request.get();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
 
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -135,7 +131,8 @@ class RequestTest {
                 "\t\t\t\"deviceId\": \"test002\",\n" +
                 "\t\t\t\"key\": \"area\",\n" +
                 "\t\t\t\"name\": \"地区\",\n" +
-                "\t\t\t\"value\": \"chongqing\"\n" +
+                "\t\t\t\"value\": \"chongqing\",\n" +
+                "\t\t\t\"type\": \"type\"\n" +
                 "\t\t}]\n" +
                 "\n" +
                 "\t},\n" +
@@ -157,8 +154,7 @@ class RequestTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -180,8 +176,7 @@ class RequestTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -204,15 +199,14 @@ class RequestTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     /**
-     * 根据设备ID类型和动态查询参数查询设备相关数据测试
+     * 根据设备ID类型和动态查询参数查询设备日志
      */
     @Test
     void queryDeviceLogPostTest() {
@@ -228,8 +222,7 @@ class RequestTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -252,8 +245,7 @@ class RequestTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -286,8 +278,7 @@ class RequestTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -307,9 +298,8 @@ class RequestTest {
         try {
 
             Response response = request.get();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
 
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -345,8 +335,7 @@ class RequestTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
