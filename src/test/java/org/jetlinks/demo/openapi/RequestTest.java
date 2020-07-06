@@ -262,15 +262,28 @@ class RequestTest {
         HttpRequest request = new SimpleHttpRequest(url);
 
         String body = "{\n" +
-                "              \"pageSize\":25,\n" +
-                "              \"pageIndex\":0,\n" +
-                "              \"terms\":[\n" +
-                "                 {\n" +
-                "                   \"column\":\"property\",\n" +
-                "                   \"value\":\"temperature\"\n" +
-                "                 }\n" +
-                "              ]\n" +
-                "          }";
+                "    \"pageSize\":25,\n" +
+                "    \"pageIndex\":0,\n" +
+                "    \"terms\":[\n" +
+                "        {\n" +
+                //根据属性查询
+                "            \"column\":\"property\",\n" +
+                "            \"value\":\"temperature\"\n" +
+                "        },\n" +
+                "        {\n" +
+                //根据时间戳查询
+                "            \"column\":\"timestamp\",\n" +
+                "            \"termType\":\"lt\",\n" +
+                "            \"value\":\"1591689602547\"\n" +
+                "        },\n" +
+                "        {\n" +
+                //根据属性值查询
+                "            \"column\":\"formatValue\",\n" +
+                "            \"termType\":\"gt\",\n" +
+                "            \"value\":\"50\"\n" +
+                "        }\n" +
+                "    ]\n" +
+                "}\n";
 
         request.headers(HeaderUtils.createHeadersOfJsonString(body));
         System.out.println("Headers:===========>" + HeaderUtils.createHeadersOfJsonString(body));
