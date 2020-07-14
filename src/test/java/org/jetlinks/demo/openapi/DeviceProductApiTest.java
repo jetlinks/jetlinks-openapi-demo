@@ -1,5 +1,6 @@
 package org.jetlinks.demo.openapi;
 
+import com.alibaba.fastjson.JSON;
 import org.jetlinks.demo.openapi.util.Utils;
 import org.junit.jupiter.api.Test;
 
@@ -40,8 +41,7 @@ public class DeviceProductApiTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,8 +71,7 @@ public class DeviceProductApiTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -103,8 +102,7 @@ public class DeviceProductApiTest {
 
         try {
             Response response = request.post();
-            Map<String, String> result = Utils.queryStringToMap(new String(response.asBytes(), "utf8"), "utf8");
-            System.out.println(result);
+            System.out.println(JSON.parse(response.asBytes()));
         } catch (IOException e) {
             e.printStackTrace();
         }
