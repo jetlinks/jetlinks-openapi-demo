@@ -1,6 +1,8 @@
 package org.jetlinks.demo.openapi;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.jetlinks.demo.openapi.util.Utils;
 import org.junit.jupiter.api.Test;
 
@@ -17,7 +19,7 @@ class RequestTest {
 
     private static final String base_url = "http://localhost:8844/api/v1/device";
     private static final String deviceId = "test001";
-
+    private static HttpClient httpClient = HttpClientBuilder.create().build();
     /**
      * 获取设备属性测试
      */
@@ -27,7 +29,7 @@ class RequestTest {
         String property = "temperature";//温度属性，属性在设备管理的设备型号中设置
         String url = base_url + "/" + deviceId + "/property/" + property;
 
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
         request.headers(HeaderUtils.createHeadersOfParams(new HashMap<>()));
         System.out.println(HeaderUtils.createHeadersOfParams(new HashMap<>()));
         try {
@@ -49,7 +51,7 @@ class RequestTest {
         String url = base_url + "/" + deviceId + "/properties";
 
         System.out.println(url);
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
         Map<String, Object> params = new HashMap<>();
         params.put("temperature", 50F);
 
@@ -74,7 +76,7 @@ class RequestTest {
         String url = base_url + "/" + deviceId + "/function/" + functionId;
 
         System.out.println(url);
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
         String body = "{\"start_date\":\"2020-04-12\"}";
 
         request.headers(HeaderUtils.createHeadersOfJsonString(body));
@@ -97,7 +99,7 @@ class RequestTest {
 
         String url = base_url + "/" + deviceId + "/_detail";
 
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
         request.headers(HeaderUtils.createHeadersOfParams(new HashMap<>()));
         System.out.println(HeaderUtils.createHeadersOfParams(new HashMap<>()));
         try {
@@ -117,7 +119,7 @@ class RequestTest {
     void saveDeviceTest() {
         String url = base_url;
 
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
 
         String body = "[{\n" +
                 "\t\t\"id\": \"test002\",\n" +
@@ -168,7 +170,7 @@ class RequestTest {
         String url = base_url + "/_deploy";//激活
         //String url = base_url + "/_unDeploy";//注销
 
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
 
         String body = "[\"test003\",\"test004\"]";
         request.headers(HeaderUtils.createHeadersOfJsonString(body));
@@ -189,7 +191,7 @@ class RequestTest {
     void batchDeleteTest() {
         String url = base_url + "/_delete";
 
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
 
         String body = "[\"test002\",\"test003\",\"test004\"]";
         request.headers(HeaderUtils.createHeadersOfJsonString(body));
@@ -213,7 +215,7 @@ class RequestTest {
         String url = base_url + "/" + deviceId + "/log/_query";
 
         System.out.println(url);
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
 
         //String body = "{\"pageSize\":25,\"pageIndex\":0,\"where\":\"productId is 1236859833832701952\"}";
         String body = "{\"pageSize\":25,\"pageIndex\":0,\"terms\":[{\"column\":\"productId\",\"value\":\"1236859833832701952\"}]}";
@@ -236,7 +238,7 @@ class RequestTest {
         String url = base_url + "/_query";
 
         System.out.println(url);
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
 
         //String body = "{\"pageSize\":25,\"pageIndex\":0,\"where\":\"productId is 1236859833832701952\"}";
         String body = "{\"pageSize\":25,\"pageIndex\":0,\"terms\":[{\"column\":\"productId\",\"value\":\"1236859833832701952\"}]}";
@@ -259,7 +261,7 @@ class RequestTest {
         String url = base_url + "/" + deviceId + "/properties/_query";
 
         System.out.println(url);
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
 
         String body = "{\n" +
                 "    \"pageSize\":25,\n" +
@@ -305,7 +307,7 @@ class RequestTest {
 
         String url = base_url + "/" + deviceId + "/properties/_latest";
 
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
         request.headers(HeaderUtils.createHeadersOfParams(new HashMap<>()));
         System.out.println(HeaderUtils.createHeadersOfParams(new HashMap<>()));
         try {
@@ -329,7 +331,7 @@ class RequestTest {
         String url = base_url + "/" + deviceId + "/event/" + eventId + "/_query";
 
         System.out.println(url);
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
 
         String body = "{\n" +
                 "              \"pageSize\":25,\n" +

@@ -72,4 +72,14 @@ public class HeaderUtils {
         System.out.println(Hex.encodeHexString(digest.digest()) +"|"+xClientId+"|"+ xTimestamp);
         return headers;
     }
+
+    static Map<String, String> createToken() {
+
+
+        Map<String, String> headers = new HashMap<>();
+        headers.put("X-Access-Token", "4ce48a01d0e41192af13fe223db6df84");
+
+
+        return headers;
+    }
 }

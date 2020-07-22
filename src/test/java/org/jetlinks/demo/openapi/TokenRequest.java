@@ -1,6 +1,8 @@
 package org.jetlinks.demo.openapi;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.jetlinks.demo.openapi.util.Utils;
 import org.junit.jupiter.api.Test;
 
@@ -13,15 +15,16 @@ import java.util.Map;
  * @since 1.0
  */
 public class TokenRequest {
+    private static HttpClient httpClient = HttpClientBuilder.create().build();
 
     /**
      * 申请token测试
      */
     @Test
-    void batchDeleteTest() {
+    void tokenTest() {
         String url = "http://localhost:8844/api/v1/token";
 
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
 
         String body = "{\"expires\": 7200}";
         request.headers(HeaderUtils.createHeadersOfJsonString(body));

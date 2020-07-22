@@ -1,6 +1,8 @@
 package org.jetlinks.demo.openapi;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.jetlinks.demo.openapi.util.Utils;
 import org.junit.jupiter.api.Test;
 
@@ -14,7 +16,8 @@ import java.util.Map;
  */
 public class GeoApiTest {
 
-    private static final String base_url = "http://localhost:8844/api/v1/geo/object";
+    private static final String base_url = "http://192.168.3.146:8844/api/v1/geo/object";
+    private static HttpClient httpClient = HttpClientBuilder.create().build();
 
     /**
      * 查询geo对象测试
@@ -24,7 +27,7 @@ public class GeoApiTest {
         String url = base_url + "/_search";
 
         System.out.println(url);
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
 //        String body = "{" +
 //                "\"shape\": {" +
 //                "\"objectId\": \"youyang\" " +
@@ -82,7 +85,7 @@ public class GeoApiTest {
         String url = base_url + "/_search/geo.json";
 
         System.out.println(url);
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
 //        String body = "{" +
 //                "\"shape\": {" +
 //                "\"objectId\": \"yuzhong\" " +
@@ -122,7 +125,7 @@ public class GeoApiTest {
         String url = base_url + "/geo.json";
 
         System.out.println(url);
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
         String body = "{\"type\":\"FeatureCollection\",\"features\":[{\"type\":\"Feature\",\"properties\":{\"name\":\"酉阳土家族苗族自治县\",\"id\":\"youyang2\",\"objectId\":\"youyang\",\"group\":\"china\",\"objectType\":\"city\"},\"geometry\":{\"type\":\"Polygon\",\"coordinates\":[[[108.3142,28.9984],[108.3253,29.0139],[108.3253,28.95],[108.3142,28.9984]]]}}]}";
 
         request.headers(HeaderUtils.createHeadersOfJsonString(body));
@@ -139,7 +142,7 @@ public class GeoApiTest {
 
 
     private static String getChongQingGeoJson() {
-        HttpRequest request = new SimpleHttpRequest("https://a.amap.com/jsapi_demos/static/geojson/chongqing.json");
+        HttpRequest request = new SimpleHttpRequest("https://a.amap.com/jsapi_demos/static/geojson/chongqing.json", httpClient);
         String result = "";
         try {
             Response response = request.get();

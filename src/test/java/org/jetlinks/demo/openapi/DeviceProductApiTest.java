@@ -1,6 +1,8 @@
 package org.jetlinks.demo.openapi;
 
 import com.alibaba.fastjson.JSON;
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.jetlinks.demo.openapi.util.Utils;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +18,7 @@ public class DeviceProductApiTest {
 
     private static final String base_url = "http://localhost:8844/api/v1/product";
     private static final String productId = "1236859833832701952";
+    private static HttpClient httpClient = HttpClientBuilder.create().build();
 
     /**
      * 根据产品ID和动态查询参数查询设备相关数据测试
@@ -25,7 +28,7 @@ public class DeviceProductApiTest {
         String url = base_url + "/" + productId + "/log/_query/";
 
         System.out.println(url);
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
         String body = "{\n" +
                 "\t\"pageSize\": 25,\n" +
                 "\t\"pageIndex\": 0,\n" +
@@ -34,7 +37,6 @@ public class DeviceProductApiTest {
                 "\t\t\"value\": \"test001\"\n" +
                 "\t}]\n" +
                 "}";
-
         request.headers(HeaderUtils.createHeadersOfJsonString(body));
         System.out.println("Headers:===========>" + HeaderUtils.createHeadersOfJsonString(body));
         request.requestBody(body);
@@ -55,7 +57,7 @@ public class DeviceProductApiTest {
         String url = base_url + "/" + productId + "/properties/_query/";
 
         System.out.println(url);
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
         String body = "{\n" +
                 "\t\"pageSize\": 25,\n" +
                 "\t\"pageIndex\": 0,\n" +
@@ -86,7 +88,7 @@ public class DeviceProductApiTest {
         String url = base_url + "/" + productId + "/event/" + eventId + "/_query/";
 
         System.out.println(url);
-        HttpRequest request = new SimpleHttpRequest(url);
+        HttpRequest request = new SimpleHttpRequest(url, httpClient);
         String body = "{\n" +
                 "\t\"pageSize\": 25,\n" +
                 "\t\"pageIndex\": 0,\n" +
