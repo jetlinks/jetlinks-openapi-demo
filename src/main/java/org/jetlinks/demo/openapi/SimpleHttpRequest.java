@@ -104,13 +104,13 @@ public class SimpleHttpRequest implements HttpRequest {
 
     @Override
     public Response patch() throws IOException {
-        HttpPatch delete = new HttpPatch(url);
+        HttpPatch patch = new HttpPatch(url);
         if (requestBody != null)
-            delete.setEntity(new StringEntity(requestBody, ContentType.create(contentType)));
+            patch.setEntity(new StringEntity(requestBody, ContentType.create(contentType, encode)));
         else {
-            delete.setEntity(createUrlEncodedFormEntity());
+            patch.setEntity(createUrlEncodedFormEntity());
         }
-        return getResultValue(execute(delete));
+        return getResultValue(execute(patch));
     }
 
     @Override
